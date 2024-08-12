@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 import prisma from '@/prisma';
 
-
 export class SampleController {
   async getSampleData(req: Request, res: Response) {
-    const sampleData = await prisma.sample.findMany();
+    const sampleData = await prisma.event.findMany();
 
     return res.status(200).send(sampleData);
   }
@@ -12,7 +11,7 @@ export class SampleController {
   async getSampleDataById(req: Request, res: Response) {
     const { id } = req.params;
 
-    const sample = await prisma.sample.findUnique({
+    const sample = await prisma.event.findUnique({
       where: { id: Number(id) },
     });
 
@@ -26,7 +25,7 @@ export class SampleController {
   async createSampleData(req: Request, res: Response) {
     const { name, code } = req.body;
 
-    const newSampleData = await prisma.sample.create({
+    const newSampleData = await prisma.event.create({
       data: { name, code },
     });
 
@@ -34,4 +33,4 @@ export class SampleController {
   }
 }
 
-console.log('Hello')
+console.log('Hello');

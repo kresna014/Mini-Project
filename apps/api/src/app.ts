@@ -9,7 +9,11 @@ import express, {
 } from 'express';
 import cors from 'cors';
 import { PORT } from './config';
-import { SampleRouter } from './routers/sample.router';
+import { EventRouter } from './routers/eventRouter';
+import { PromotionRouter } from './routers/promotionRouter';
+import { reviewService } from './services/reviewService';
+import { ReviewRouter } from './routers/reviewRouter';
+import { TransactionRouter } from './routers/transactionRouter';
 
 export default class App {
   private app: Express;
@@ -51,13 +55,19 @@ export default class App {
   }
 
   private routes(): void {
-    const sampleRouter = new SampleRouter();
+    const eventRouter = new EventRouter();
+    const promotionRouter = new PromotionRouter();
+    const reviewRouter = new ReviewRouter();
+    const transactionRouter = new TransactionRouter();
 
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
     });
 
-    this.app.use('/api/samples', sampleRouter.getRouter());
+    this.app.use('/api/event', eventRouter.getRouter());
+    this.app.use('/api/promotion', promotionRouter.getRouter());
+    this.app.use('/api/review', reviewRouter.getRouter());
+    this.app.use('/api/transaction', transactionRouter.getRouter());
   }
 
   public start(): void {

@@ -10,12 +10,76 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Event {
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  location             String
+  location_description String
+  time_event           DateTime
+  image_url            String
+  description          String
+  available_seats      Int
+  is_paid              Int
+  price_event          Int
+  type_event           String
+  created_at           DateTime
 
-  @@map("samples") // if you want to use snake_case format
+  @@map("event") // if you want to use snake_case format
+}
+
+model promotion {
+  id                 Int      @id @default(autoincrement())
+  id_event           Int
+  code_promotion     String
+  max_claim          Int
+  startdate_discount DateTime
+  enddate_discount   DateTime
+  nominal_discount   Float
+  type_discount      String
+  create_at          DateTime
+}
+
+model transaction {
+  id           Int      @id @default(autoincrement())
+  id_event     Int
+  tickets      String
+  id_promotion Int
+  price        Int
+  total_price  Int
+  status       String
+  proof        String
+  created_at   DateTime
+}
+
+model reviews {
+  id             Int      @id @default(autoincrement())
+  id_event       Int
+  id_transaction Int
+  title          String
+  description    String
+  rate           Int
+  created_at     DateTime
+}
+
+model users {
+  id             Int      @id @default(autoincrement())
+  name           String
+  email          String
+  password       String
+  referal_code String
+  poin           Int
+  image_url      String
+  phone_number   Int
+  isVerify       Boolean
+  created_at     DateTime
+}
+
+model Eo {
+  id         Int      @id @default(autoincrement())
+  creator    Int
+  email      String
+  password   String
+  image_url  String
+  isVerify   Boolean
+  created_at DateTime
 }
